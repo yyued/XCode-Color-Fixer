@@ -1,0 +1,54 @@
+#!/usr/bin/php -q
+<?php
+echo "=== XCode Color Space Fixer ===", "\n";
+echo "Any Question? PonyCui@me.com", "\n";
+echo "root = ", getcwd(), "\n";
+
+$root = getcwd();
+
+$files = scandir($root);
+$isXcodeProj = false;
+foreach ($files as $file) {
+    if (strpos($file,'.xcodeproj') !== false) {
+        $isXcodeProj = true;
+    }
+}
+
+if ($isXcodeProj) {
+    echo "isXcodeProj = true", "\n";
+}
+else {
+    die("[Error] Not a valid xcode project directory!"."\n");
+}
+
+scanInterfaceBuilderFiles($root);
+
+function scanInterfaceBuilderFiles($dir) {
+    $files = scandir($dir);
+    foreach ($files as $file) {
+        if ($file == '.' || $file == '..' || $file == 'Pods') {
+            continue;
+        }
+        else if (is_dir($dir.'/'.$file)) {
+            scanInterfaceBuilderFiles($dir.'/'.$file);
+        }
+        else {
+            if (strpos($file, '.storyboard') !== false || strpos($file, '.xib') !== false) {
+                $changed = replaceColorSpace($dir.'/'.$file);
+                echo 'file = ', $file, " " ,($changed ? "[Change]" : "[OK]"), "\n";
+            }
+        }
+    }
+}
+
+function replaceColorSpace($filePath) {
+    $fileContents = file_get_contents($filePath);
+    $replaceContents = str_replace('colorSpace="custom" customColorSpace="sRGB"', 'colorSpace="calibratedRGB"', $fileContents);
+    if($replaceContents == $fileContents) {
+        return false;
+    }
+    else {
+        file_put_contents($filePath, $replaceContents);
+        return true;
+    }
+}
