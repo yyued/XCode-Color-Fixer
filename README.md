@@ -11,7 +11,8 @@ StoryBoard / XIB 颜色偏差很严重，怎么破？XCode-Color-Fixer帮你忙�
 只要我们运行这个小工具，就能得到真实的色值。
 ![command](https://raw.githubusercontent.com/duowan/XCode-Color-Fixer/master/sample/command.png)
 
-* 安装方法
-1.将bin/rgb复制到/usr/local/bin/目录下 (cp ./bin/rgb /usr/local/bin/rgb)
-2.设置权限 (sudo chmod 777 /usr/local/bin/rgb)
-3.使用时，cd 到工程目录，再执行 rgb 即可
+## 安装方法 
+
+1. 将bin/rgb复制到/usr/local/bin/目录下 (cp ./bin/rgb /usr/local/bin/rgb)
+2. 设置权限 (sudo chmod 777 /usr/local/bin/rgb)
+3. 使用时，cd 到工程目录，再执行 rgb 即可
